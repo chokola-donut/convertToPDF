@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>PDF с классами и кириллицей через atob</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap&subset=cyrillic" rel="stylesheet">
+    <style>
+        /* Пример стилей для классов */
+        .title {
+         
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .paragraph {
+            font-size: 18px;
+        }
+        .admonition{
+            padding: 20px;
+            border-left: 2px solid 
+        }
+        img{
+            width:500px;
+            height: 300px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div><div> <h1 class="title">Яблочные пирожки</h1></div></div>
+         <p class="paragraph">Яблочные пирожки <strong>очень вкусные. </strong>Их любят <em>все, </em><strong><em>без исключения</em></strong></p>
+         <h2 class="stitl">Почему они такие вкусные?</h2>
+         <h3 class="sstitl">Качественные продукты</h3>
+         <h4 class='s2stitl'>Сбор яблок в садах России</h4>
+         
+       
+         <div><div><div class="admonition admonition-quote" >Приготовить пирожки, используя краснодарские яблоки
+           
+         </div></div></div>
+         <div><div><div class="admonition admonition-tip">Приготовить пирожки, используя краснодарские яблоки</div></div></div>
+         
+         <div class="admonition admonition-danger">Приготовить пирожки, используя краснодарские яблоки</div>
+     
+         <div><div><div class="admonition admonition-note">Приготовить пирожки, используя краснодарские яблоки</div></div></div>
+        
+         <h2 >Нумеррованный список</h2>
+         <ol>
+            <li>aaaaaaa</li>
+            <li>aaaaaaa</li>
+            <li>aaaaaaa</li>
+            <li>aaaaaaa</li>
+         </ol>
+       
+         <h2 class="stitl">Маркированный список</h2>
+        
+         <ul>
+            <li>bbbbbbbbbbb</li>
+            <li>bbbbbbbbbbb</li>
+            <li>bbbbbbbbbbb</li>
+            <li>bbbbbbbbbbb</li>
+            <li>bbbbbbbbbbb</li>
+        </ul>
+        <table><tr><thead>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           <th>sada</th>
+           
+        </thead>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr><tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+       <tr>
+        <td>adasd</td>
+           <td>adasd</td>
+           <td>dada</td>
+       </tr>
+   
+
+       </table>
+       <pre>function checkPageBreak(){
+        const pageHeight = doc.internal.pageSize.height; 
+        if (yOffset > pageHeight - 20){
+            doc.addPage()
+            yOffset = 20
+            yOffset1 = 20
+        }
+    } 
+</pre>
+       <img src="scale_1200.jpg" alt="" >
+     </div>
+    
+    
+    <!-- Кнопка для генерации PDF -->
+    <button id="generatePDFButton">Создать PDF</button>
+
+    <!-- Подключение библиотеки jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+    <script src="a.js">
+      
+    </script>
+</body>
+</html>
