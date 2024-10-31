@@ -14,14 +14,6 @@ function checkPageBreak() {
         yOffset1 = 20
     }
 }
-function checkPageBreakForPre() {
-    const pageHeight = doc.internal.pageSize.height; 
-    if (yOffset > pageHeight - 20) { 
-        doc.addPage();
-        yOffset = 20; 
-        yOffset1 = 20
-    }
-}
 //titlejjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 function addTitles(titles) {
     const titleStyle = {
@@ -257,7 +249,7 @@ function addBoxes(boxes) {
     }else if(boxes[0].classList.contains('admonition-lab')){
        
             doc.setLineWidth(lineStyle.lineWidth);
-            doc.setDrawColor(lineStyle.lineColor[1][0], lineStyle.lineColor[1][1], lineStyle.lineColor[2][2]);
+            doc.setDrawColor(lineStyle.lineColor[1][0], lineStyle.lineColor[1][1], lineStyle.lineColor[1][2]);
             doc.setFontSize(textStyle.fontSize);
 
             const textLines = doc.splitTextToSize(boxes[0].innerText, textStyle.maxWidth);
@@ -368,7 +360,14 @@ function addBoxes(boxes) {
                     yOffset += 7; 
                     xOffset = 15; 
                 }
-               
+                const pageHeight = doc.internal.pageSize.height; 
+                if (yOffset > pageHeight - 30) { 
+                    yOffset += 10; 
+                    doc.addPage()
+                    yOffset = 10;
+                    
+                   
+                }  
                 doc.text(line, xOffset, yOffset);
                 xOffset += doc.getTextWidth(line);
          
@@ -376,7 +375,7 @@ function addBoxes(boxes) {
             if(textLines.length<=1){
                 doc.line(10, yOffset-10, 10, yOffset+10); 
             }else{
-                doc.line(10, yOffset+10, 10, yOffset1-10); 
+                doc.line(10, yOffset+10, 10, yOffset1-5); 
             }
             yOffset += 30; 
             boxes.shift()
@@ -384,6 +383,7 @@ function addBoxes(boxes) {
         }
     };
 
+ 
 // TABLEjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 function addTable(tables){
     tables.forEach((table)=>{
@@ -407,7 +407,7 @@ border:{top:1, bottom: 0, left: 0, right: 0}
 
     }
 })
-    yOffset = doc.lastAutoTable.finalY + 20; 
+    yOffset = doc.lastAutoTable.finalY + 10; 
 
 if (yOffset + 20 > doc.internal.pageSize.height) {
     doc.addPage();
@@ -415,40 +415,48 @@ if (yOffset + 20 > doc.internal.pageSize.height) {
 }; });
 }
 //CODEjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-//доработать
 function addPre(pres){
     let xOffset = 10
     const xOffset1 = xOffset
-    const yOffset2 = yOffset
+    let yOffset2 = yOffset
     const preStyle = {
         fontSize: 10,
         halign: 'left',
-        maxWidth:180
+        maxWidth:190
     };
-    
     doc.setFontSize(preStyle.fontSize);
     doc.addFont("fonts/CourierPrime-Regular.ttf", "CustomFontCourier", "normal");
     doc.setFont('CustomFontCourier');
     pres.forEach((pre) => {
     const textLines = doc.splitTextToSize(pre.innerText, preStyle.maxWidth-xOffset);
-    console.log(textLines)
         textLines.forEach((line) => {
             yOffset += 10; 
             xOffset = 10; 
             doc.text(line, xOffset+10, yOffset,{ align: preStyle.halign });
             xOffset += doc.getTextWidth(line);
+            const pageHeight = doc.internal.pageSize.height; 
+                if (yOffset > pageHeight - 30) { 
+                    yOffset += 10; 
+                    console.log(yOffset)
+                    doc.rect(xOffset1,yOffset2,preStyle.maxWidth,yOffset-yOffset2)
+                    doc.addPage()
+                    yOffset = 10;
+                    yOffset2 = 10; 
+                   
+                }          
         });
-            checkPageBreak()
-            doc.rect(xOffset1,yOffset2,preStyle.maxWidth+10,yOffset-yOffset2)
-            yOffset += 5;
+
+        doc.rect(xOffset1,yOffset2,preStyle.maxWidth,yOffset-yOffset2)
+            yOffset += 15;
             });
     
 }
 
 //IMAGESjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-//доработать
-function addImgs(imgs){
-    imgs.forEach((img) => {
+
+function addImgs(img){
+    
+
   
         const style = window.getComputedStyle(img);
         const width = parseFloat(style.width); 
@@ -464,11 +472,16 @@ function addImgs(imgs){
 
         const pageWidth=doc.internal.pageSize.width
 
-        const xOffset = Math.abs((pageWidth - width))/2;
-        
+        const xOffset = Math.abs((pageWidth - width/4))/2
+     
+        if (yOffset + height/4 > doc.internal.pageSize.height) {
+            doc.addPage();
+            yOffset = 10; 
+        }
         doc.addImage(imgData, "PNG", xOffset, yOffset, width, height);
-        yOffset += height + 10;
-    });
+        yOffset += height/4 + 15;
+        
+    ;
     
     
 }
@@ -501,9 +514,11 @@ function a(el){
         const lit1 = Array.from(el.querySelectorAll('li')); 
         addUn_List(lit1)
     }
-    else if (el.tagName === 'IMG') { 
-        const imgs= Array.from(document.querySelectorAll('img')); 
-        addImgs(imgs)
+    else if (el.tagName ==="IMG") { 
+       
+         console.log(el)
+        addImgs(el)
+
       
     }
     else if(el.tagName === 'PRE'){
@@ -516,8 +531,18 @@ function a(el){
     //      console.log(tables)
      
     }
+    
+      
+    
     Array.from(el.children).forEach((child) => a(child));
 }
+// const links = document.querySelectorAll("gr-file")
+// console.log(links)
+// addfile(links)
+
+       
+
+
 
 //GENERATEjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 async function generatePDF() { 
