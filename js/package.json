@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "jspdf": "^1.5.3",
+    "jspdf-customfonts": "^0.0.4-rc.4"
+  }
+}
